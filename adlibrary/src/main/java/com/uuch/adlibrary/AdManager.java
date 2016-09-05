@@ -27,6 +27,7 @@ import java.util.List;
  */
 public class AdManager {
 
+    List<AdInfo> advInfoListList;
     private Activity context;
     private DisplayMetrics displayMetrics = new DisplayMetrics();
     private View contentView;
@@ -35,7 +36,6 @@ public class AdManager {
     private AdAdapter adAdapter;
     private FlycoPageIndicaor mIndicator;
     private AnimDialogUtils animDialogUtils;
-    List<AdInfo> advInfoListList;
     /**
      * 广告弹窗距离两侧的距离-单位(dp)
      */
@@ -63,12 +63,6 @@ public class AdManager {
     private boolean isOverScreen = true;
 
     private OnImageClickListener onImageClickListener = null;
-
-    public AdManager(Activity context, List<AdInfo> advInfoListList) {
-        this.context = context;
-        this.advInfoListList = advInfoListList;
-    }
-
     private View.OnClickListener imageOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -79,6 +73,11 @@ public class AdManager {
             }
         }
     };
+
+    public AdManager(Activity context, List<AdInfo> advInfoListList) {
+        this.context = context;
+        this.advInfoListList = advInfoListList;
+    }
 
     /**
      * 开始执行显示广告弹窗的操作
@@ -146,6 +145,117 @@ public class AdManager {
         } else {
             mIndicator.setVisibility(View.INVISIBLE);
         }
+    }
+
+    /**
+     * 设置弹窗距离屏幕左右两侧的距离
+     */
+    public AdManager setPadding(int padding) {
+        this.padding = padding;
+
+        return this;
+    }
+
+    // ######################## 点击事件处理操作类 ########################
+
+    /**
+     * 设置弹窗宽高比
+     */
+    public AdManager setWidthPerHeight(float widthPerHeight) {
+        this.widthPerHeight = widthPerHeight;
+
+        return this;
+    }
+
+    // ######################## get set方法 #########################
+
+    /**
+     * 设置ViewPager Item点击事件
+     */
+    public AdManager setOnImageClickListener(OnImageClickListener onImageClickListener) {
+        this.onImageClickListener = onImageClickListener;
+
+        return this;
+    }
+
+    /**
+     * 设置背景是否透明
+     */
+    public AdManager setAnimBackViewTransparent(boolean animBackViewTransparent) {
+        isAnimBackViewTransparent = animBackViewTransparent;
+
+        return this;
+    }
+
+    /**
+     * 设置弹窗关闭按钮是否可见
+     */
+    public AdManager setDialogCloseable(boolean dialogCloseable) {
+        isDialogCloseable = dialogCloseable;
+
+        return this;
+    }
+
+    /**
+     * 设置弹窗关闭按钮点击事件
+     */
+    public AdManager setOnCloseClickListener(View.OnClickListener onCloseClickListener) {
+        this.onCloseClickListener = onCloseClickListener;
+
+        return this;
+    }
+
+    /**
+     * 设置弹窗背景颜色
+     */
+    public AdManager setBackViewColor(int backViewColor) {
+        this.backViewColor = backViewColor;
+
+        return this;
+    }
+
+    /**
+     * 设置弹窗弹性动画弹性参数
+     */
+    public AdManager setBounciness(double bounciness) {
+        this.bounciness = bounciness;
+
+        return this;
+    }
+
+    /**
+     * 设置弹窗弹性动画速度参数
+     */
+    public AdManager setSpeed(double speed) {
+        this.speed = speed;
+
+        return this;
+    }
+
+    /**
+     * 设置ViewPager滑动动画效果
+     */
+    public AdManager setPageTransformer(ViewPager.PageTransformer pageTransformer) {
+        this.pageTransformer = pageTransformer;
+
+        return this;
+    }
+
+    /**
+     * 设置弹窗背景是否覆盖全屏幕
+     */
+    public AdManager setOverScreen(boolean overScreen) {
+        isOverScreen = overScreen;
+
+        return this;
+    }
+
+    /**
+     * ViewPager每一项的单击事件
+     */
+    public interface OnImageClickListener {
+
+        void onImageClick(View view, AdInfo advInfo);
     }
 
     class AdAdapter extends PagerAdapter {
@@ -252,116 +362,5 @@ public class AdManager {
 
             return rootView;
         }
-    }
-
-    // ######################## 点击事件处理操作类 ########################
-
-    /**
-     * ViewPager每一项的单击事件
-     */
-    public interface OnImageClickListener {
-
-        void onImageClick(View view, AdInfo advInfo);
-    }
-
-    // ######################## get set方法 #########################
-
-    /**
-     * 设置弹窗距离屏幕左右两侧的距离
-     */
-    public AdManager setPadding(int padding) {
-        this.padding = padding;
-
-        return this;
-    }
-
-    /**
-     * 设置弹窗宽高比
-     */
-    public AdManager setWidthPerHeight(float widthPerHeight) {
-        this.widthPerHeight = widthPerHeight;
-
-        return this;
-    }
-
-    /**
-     * 设置ViewPager Item点击事件
-     */
-    public AdManager setOnImageClickListener(OnImageClickListener onImageClickListener) {
-        this.onImageClickListener = onImageClickListener;
-
-        return this;
-    }
-
-    /**
-     * 设置背景是否透明
-     */
-    public AdManager setAnimBackViewTransparent(boolean animBackViewTransparent) {
-        isAnimBackViewTransparent = animBackViewTransparent;
-
-        return this;
-    }
-
-    /**
-     * 设置弹窗关闭按钮是否可见
-     */
-    public AdManager setDialogCloseable(boolean dialogCloseable) {
-        isDialogCloseable = dialogCloseable;
-
-        return this;
-    }
-
-    /**
-     * 设置弹窗关闭按钮点击事件
-     */
-    public AdManager setOnCloseClickListener(View.OnClickListener onCloseClickListener) {
-        this.onCloseClickListener = onCloseClickListener;
-
-        return this;
-    }
-
-    /**
-     * 设置弹窗背景颜色
-     */
-    public AdManager setBackViewColor(int backViewColor) {
-        this.backViewColor = backViewColor;
-
-        return this;
-    }
-
-    /**
-     * 设置弹窗弹性动画弹性参数
-     */
-    public AdManager setBounciness(double bounciness) {
-        this.bounciness = bounciness;
-
-        return this;
-    }
-
-    /**
-     * 设置弹窗弹性动画速度参数
-     */
-    public AdManager setSpeed(double speed) {
-        this.speed = speed;
-
-        return this;
-    }
-
-    /**
-     * 设置ViewPager滑动动画效果
-     */
-    public AdManager setPageTransformer(ViewPager.PageTransformer pageTransformer) {
-        this.pageTransformer = pageTransformer;
-
-        return this;
-    }
-
-    /**
-     * 设置弹窗背景是否覆盖全屏幕
-     */
-    public AdManager setOverScreen(boolean overScreen) {
-        isOverScreen = overScreen;
-
-        return this;
     }
 }

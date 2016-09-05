@@ -1,11 +1,14 @@
 # android-adDialog
 
-**更新日志**
+**说明**
 
-- compile 1.0 2016/08/08 完成广告活动弹窗1.0版本
+项目fork自[yipianfengye/android-adDialog](https://github.com/yipianfengye/android-adDialog)
 
-- compile 1.0 2016/08/08 删除demo中约束引用（否则AS2.2以下编译有问题）
+主要修改将[fresco](https://github.com/facebook/fresco)替换为[glide](https://github.com/bumptech/glide)
 
+删除多余引用
+
+其他修改
 
 
 在介绍具体的使用说明之前，我们先看一下简单的实现效果：
@@ -85,10 +88,21 @@ aDMamager.
 
 **使用方式：**
 
-- 在module的build.gradle中执行compile操作
+- 在module的build.gradle底部添加jitpack仓库地址
+
+```groovy
+allprojects {
+		repositories {
+			...
+			maven { url "https://jitpack.io" }
+		}
+	}
+```
+
+添加依赖
 
 ```
-compile 'cn.yipianfengye.android:ad-library:1.0'
+ compile 'com.github.d0calv1n:android-adDialog:1.0'
 ```
 
 - 在代码中初始化数据
