@@ -41,6 +41,11 @@ public class AdConstant {
     public static final int ANIM_DOWNRIGHT_TO_CENTER = -18;
 
     /**
+     * 活动弹窗动画-透明渐显
+     */
+    public static final int ANIM_ALPHA_IN = 361;
+
+    /**
      * 判断是否是常量类型动画
      */
     public static boolean isConstantAnim(int animType) {
@@ -65,7 +70,13 @@ public class AdConstant {
         if (animType >= 0 && animType <= 360) {
             return true;
         }
+        return false;
+    }
 
+    public static boolean isAlphaAnim(int animType) {
+        if (animType == ANIM_ALPHA_IN) {
+            return true;
+        }
         return false;
     }
 

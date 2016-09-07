@@ -2,8 +2,10 @@ package com.uuch.adlibrary.anim;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import com.facebook.rebound.SimpleSpringListener;
 import com.facebook.rebound.Spring;
@@ -39,16 +41,64 @@ public class AnimSpring {
     /**
      * 弹窗打开时的动画效果
      */
-    public void startAnim(final int animType, final RelativeLayout animContainer, double bounciness,
-            double speed) {
+    public void startAnim(final int animType, final AnimDialogUtils animDialogUtils,
+            double bounciness, double speed) {
+
         springConfig = SpringConfig.fromBouncinessAndSpeed(bounciness, speed);
         // 常量类型动画效果
+        final RelativeLayout animContainer = animDialogUtils.getAnimContainer();
         if (AdConstant.isConstantAnim(animType)) {
             startConstantAnim(animType, animContainer);
         } else if (AdConstant.isCircleAnim(animType)) {
             startCircleAnim(animType, animContainer);
+        } else if (AdConstant.isAlphaAnim(animType)) {
+            startAlphaAnim(animType, animDialogUtils);
         } else {
             animContainer.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void startAlphaAnim(final int animType, final AnimDialogUtils animDialogUtils) {
+        if (animType == AdConstant.ANIM_ALPHA_IN) {
+            final ValueAnimator animator = ValueAnimator.ofFloat(0f, 1f);
+            animator.setDuration(500);
+            animator.setInterpolator(new DecelerateInterpolator());
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float alpha = (float) animation.getAnimatedValue();
+                    animDialogUtils.getAnimContainer().setAlpha(alpha);
+                    animDialogUtils.getAnimBackView().setAlpha(alpha);
+                }
+            });
+            animator.addListener(new AnimatorListenerAdapter() {
+
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    super.onAnimationStart(animation);
+                    animDialogUtils.getAnimContainer().setVisibility(View.VISIBLE);
+                }
+            });
+            animator.start();
+
+            //animContainer.setAlpha(0f);
+            //animContainer.animate()
+            //        .alpha(1)
+            //        .setDuration(500)
+            //        .setInterpolator(new DecelerateInterpolator())
+            //        .setListener(new AnimatorListenerAdapter() {
+            //
+            //            @Override
+            //            public void onAnimationStart(Animator animation) {
+            //                super.onAnimationStart(animation);
+            //                animContainer.setVisibility(View.VISIBLE);
+            //            }
+            //
+            //            @Override
+            //            public void onAnimationEnd(Animator animation) {
+            //            }
+            //        })
+            //        .start();
         }
     }
 
@@ -125,26 +175,33 @@ public class AnimSpring {
     /**
      * 弹窗退出时的动画
      */
-    public void stopAnim(int animType, final AnimDialogUtils animDialogUtils) {
+    public void stopAnim(final int animType, final AnimDialogUtils animDialogUtils) {
         if (animDialogUtils == null) {
             return;
         }
 
         if (animType == AdConstant.ANIM_STOP_TRANSPARENT) {
-            animDialogUtils.getAnimContainer()
-                    .animate()
-                    .alpha(0)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            animDialogUtils.getAndroidContentView()
-                                    .removeView(animDialogUtils.getRootView());
-                            animDialogUtils.setShowing(false);
-                        }
-                    })
-                    .setDuration(500)
-                    .setInterpolator(new AccelerateInterpolator())
-                    .start();
+            final ValueAnimator animator = ValueAnimator.ofFloat(1f, 0f);
+            animator.setDuration(500);
+            animator.setInterpolator(new AccelerateInterpolator());
+            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float alpha = (float) animation.getAnimatedValue();
+                    animDialogUtils.getAnimContainer().setAlpha(alpha);
+                    animDialogUtils.getAnimBackView().setAlpha(alpha);
+                }
+            });
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    animDialogUtils.getAndroidContentView()
+                            .removeView(animDialogUtils.getRootView());
+                    animDialogUtils.setShowing(false);
+                }
+            });
+            animator.start();
         } else {
             animDialogUtils.getAndroidContentView().removeView(animDialogUtils.getRootView());
             animDialogUtils.setShowing(false);

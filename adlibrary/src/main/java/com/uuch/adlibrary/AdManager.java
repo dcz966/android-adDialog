@@ -3,7 +3,6 @@ package com.uuch.adlibrary;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -41,9 +40,9 @@ public class AdManager {
      */
     private int padding = 44;
     /**
-     * 广告弹窗的宽高比
+     * 广告弹窗的宽高比,默认高度为wrap_content
      */
-    private float widthPerHeight = 0.75f;
+    private float widthPerHeight = 0f;
 
     // 弹窗背景是否透明
     private boolean isAnimBackViewTransparent = false;
@@ -67,7 +66,7 @@ public class AdManager {
         @Override
         public void onClick(View view) {
 
-            AdInfo advInfo = (AdInfo) view.getTag(R.id.error_view);
+            AdInfo advInfo = (AdInfo) view.getTag(R.id.tag_data);
             if (advInfo != null && onImageClickListener != null) {
                 onImageClickListener.onImageClick(view, advInfo);
             }
@@ -110,7 +109,7 @@ public class AdManager {
         setRootContainerHeight();
 
         // 延迟1s展示，为了避免ImageLoader还为加载完缓存图片时就展示了弹窗的情况
-        new Handler().postDelayed(new Runnable() {
+        adRootContent.postDelayed(new Runnable() {
             @Override
             public void run() {
                 animDialogUtils.show(animType, bounciness, speed);
@@ -131,9 +130,14 @@ public class AdManager {
         int widthPixels = displayMetrics.widthPixels;
         int totalPadding = DisplayUtil.dip2px(context, padding * 2);
         int width = widthPixels - totalPadding;
-        final int height = (int) (width / widthPerHeight);
+
         ViewGroup.LayoutParams params = adRootContent.getLayoutParams();
-        params.height = height;
+        if (widthPerHeight == 0f) {
+            params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        } else {
+            final int height = (int) (width / widthPerHeight);
+            params.height = height;
+        }
     }
 
     /**
@@ -286,7 +290,7 @@ public class AdManager {
 
             final ImageView simpleImageView =
                     (ImageView) rootView.findViewById(R.id.simpleImageView);
-            simpleImageView.setTag(R.id.error_view, advInfo);
+            simpleImageView.setTag(R.id.tag_data, advInfo);
             simpleImageView.setOnClickListener(imageOnClickListener);
             ViewGroup.LayoutParams params =
                     new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -316,49 +320,6 @@ public class AdManager {
                             simpleImageView.setVisibility(View.GONE);
                         }
                     });
-
-            //final SimpleDraweeView simpleDraweeView = (SimpleDraweeView) rootView.findViewById(R.id.simpleDraweeView);
-            //ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            //
-            //container.addView(rootView, params);
-            //
-            //simpleDraweeView.setTag(advInfo);
-            //simpleDraweeView.setOnClickListener(imageOnClickListener);
-            //
-            //
-            //ControllerListener controllerListener = new BaseControllerListener<ImageInfo>() {
-            //    @Override
-            //    public void onFinalImageSet(
-            //            String id,
-            //            @Nullable ImageInfo imageInfo,
-            //            @Nullable Animatable anim) {
-            //        if (imageInfo == null) {
-            //            return;
-            //        }
-            //        errorView.setVisibility(View.GONE);
-            //        loadingView.setVisibility(View.GONE);
-            //        simpleDraweeView.setVisibility(View.VISIBLE);
-            //    }
-            //
-            //    @Override
-            //    public void onIntermediateImageSet(String id, @Nullable ImageInfo imageInfo) {
-            //        Log.i("##########", "onIntermediateImageSet()");
-            //    }
-            //
-            //    @Override
-            //    public void onFailure(String id, Throwable throwable) {
-            //        errorView.setVisibility(View.VISIBLE);
-            //        loadingView.setVisibility(View.GONE);
-            //        simpleDraweeView.setVisibility(View.GONE);
-            //    }
-            //};
-            //
-            //Uri uri = Uri.parse(advInfo.getActivityImg());
-            //DraweeController controller = Fresco.newDraweeControllerBuilder()
-            //        .setControllerListener(controllerListener)
-            //        .setUri(uri)
-            //        .build();
-            //simpleDraweeView.setController(controller);
 
             return rootView;
         }

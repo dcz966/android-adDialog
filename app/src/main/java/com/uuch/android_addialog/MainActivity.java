@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         mList.add(new DataBean(AdConstant.ANIM_UPRIGHT_TO_CENTER, "从右上弹出广告弹窗"));
         mList.add(new DataBean(AdConstant.ANIM_DOWNLEFT_TO_CENTER, "从左下弹出广告弹窗"));
         mList.add(new DataBean(AdConstant.ANIM_DOWNRIGHT_TO_CENTER, "从右下弹出广告弹窗"));
+        mList.add(new DataBean(AdConstant.ANIM_ALPHA_IN, "渐显广告弹窗"));
         SpinnerAdapter spinnerAdapter = new SpinnerAdapter(mList, this);
         spinner.setAdapter(spinnerAdapter);
 
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 AdManager adManager = new AdManager(MainActivity.this, advList);
+                adManager.setWidthPerHeight(0.75f);
                 adManager.setOverScreen(true).setPageTransformer(new DepthPageTransformer());
                 switch (position) {
                     /**
@@ -144,6 +146,9 @@ public class MainActivity extends AppCompatActivity {
                     case 8:
                         adManager.showAdDialog(AdConstant.ANIM_DOWNRIGHT_TO_CENTER);
                         break;
+                    case 9:
+                        adManager.showAdDialog(AdConstant.ANIM_ALPHA_IN);
+                        break;
                     default:
                         break;
                 }
@@ -159,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AdManager adManager = new AdManager(MainActivity.this, advList);
+                adManager.setWidthPerHeight(0.75f);
                 String result = editText.getText().toString();
                 if (TextUtils.isEmpty(result)) {
                     Toast.makeText(MainActivity.this, "请输入弹出动画的角度!", Toast.LENGTH_SHORT).show();
@@ -201,6 +207,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AdManager adManager = new AdManager(MainActivity.this, advList);
+                adManager.setWidthPerHeight(0.75f);
 
                 adManager.setOnImageClickListener(new AdManager.OnImageClickListener() {
                     @Override
@@ -222,6 +229,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AdManager adManager = new AdManager(MainActivity.this, advList);
+                adManager.setWidthPerHeight(0.75f);
 
                 adManager.setOnImageClickListener(new AdManager.OnImageClickListener() {
                     @Override
@@ -240,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 AdManager adManager = new AdManager(MainActivity.this, advList);
+                adManager.setWidthPerHeight(0.75f);
 
                 adManager.setOnImageClickListener(new AdManager.OnImageClickListener() {
                     @Override

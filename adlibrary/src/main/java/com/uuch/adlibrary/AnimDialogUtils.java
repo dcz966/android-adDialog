@@ -101,7 +101,7 @@ public class AnimDialogUtils {
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
         androidContentView.addView(rootView, params);
-        AnimSpring.getInstance().startAnim(animType, animContainer, bounciness, speed);
+        AnimSpring.getInstance().startAnim(animType, this, bounciness, speed);
         isShowing = true;
     }
 
@@ -171,6 +171,10 @@ public class AnimDialogUtils {
 
     public View getRootView() {
         return rootView;
+    }
+
+    public View getAnimBackView() {
+        return animBackView;
     }
 
     public void setShowing(boolean showing) {
