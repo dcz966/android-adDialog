@@ -182,7 +182,7 @@ public class AnimSpring {
 
         if (animType == AdConstant.ANIM_STOP_TRANSPARENT) {
             final ValueAnimator animator = ValueAnimator.ofFloat(1f, 0f);
-            animator.setDuration(500);
+            animator.setDuration(300);
             animator.setInterpolator(new AccelerateInterpolator());
             animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override

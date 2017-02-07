@@ -306,7 +306,7 @@ public class ProgressLayout extends RelativeLayout {
 //                            android.R.color.white);
 
             Drawable errorDrawable =
-                    ContextCompat.getDrawable(getContext(), R.mipmap.ic_shopping_basket_white_36dp);
+                    DrawableCompat.wrap(ContextCompat.getDrawable(getContext(), R.mipmap.ic_shopping_basket_white_36dp));
             DrawableCompat.setTint(errorDrawable, ContextCompat.getColor(getContext(), android.R.color.white));
             errorStateImageView.setImageDrawable(errorDrawable);
 
@@ -395,7 +395,7 @@ public class ProgressLayout extends RelativeLayout {
 //                            R.color.mc);
 
             Drawable errorDrawable =
-                    ContextCompat.getDrawable(getContext(), R.mipmap.ic_signal_wifi_off_white_36dp);
+                    DrawableCompat.wrap(ContextCompat.getDrawable(getContext(), R.mipmap.ic_signal_wifi_off_white_36dp));
             DrawableCompat.setTint(errorDrawable, ContextCompat.getColor(getContext(), R.color.mc));
             errorStateImageView.setImageDrawable(errorDrawable);
 
@@ -438,9 +438,8 @@ public class ProgressLayout extends RelativeLayout {
 //                    new IconDrawable(getContext(), Iconify.IconValue.zmdi_wifi_off).colorRes(
 //                            R.color.mc);
 
-
-            Drawable errorDrawable = ContextCompat.getDrawable(getContext(),
-                    R.mipmap.ic_signal_wifi_off_white_36dp);
+            Drawable errorDrawable =
+                    DrawableCompat.wrap(ContextCompat.getDrawable(getContext(), R.mipmap.ic_signal_wifi_off_white_36dp));
             DrawableCompat.setTint(errorDrawable, ContextCompat.getColor(getContext(), R.color.mc));
             errorStateImageView.setImageDrawable(errorDrawable);
 
