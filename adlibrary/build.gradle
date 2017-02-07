@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
 
@@ -27,13 +27,13 @@ dependencies {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    compile 'com.malinskiy:materialicons:1.0.2'
+    // compile 'com.malinskiy:materialicons:1.0.2'
     provided 'com.github.bumptech.glide:glide:3.7.0'
-    provided 'com.android.support:support-v4:23.4.0'
+    provided 'com.android.support:support-v4:25.+'
 }
 
 ext {
-    PUBLISH_GROUP_ID = 'cn.yipianfengye.android'
+    PUBLISH_GROUP_ID = 'cn.calvin.android'
     PUBLISH_ARTIFACT_ID = 'ad-library'
     PUBLISH_VERSION = '1.0'
 }

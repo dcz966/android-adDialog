@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -17,8 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.malinskiy.materialicons.IconDrawable;
-import com.malinskiy.materialicons.Iconify;
+
 import com.uuch.adlibrary.R;
 
 /**
@@ -298,11 +299,16 @@ public class ProgressLayout extends RelativeLayout {
                     (RelativeLayout) view.findViewById(R.id.emptyStateRelativeLayout);
             emptyStateImageView = (ImageView) view.findViewById(R.id.emptyStateImageView);
 
-            Drawable emptyDrawable =
-                    new IconDrawable(getContext(), Iconify.IconValue.zmdi_shopping_basket).colorRes(
-                            android.R.color.white);
+            emptyStateImageView.setImageResource(R.mipmap.ic_shopping_basket_white_36dp);
 
-            emptyStateImageView.setImageDrawable(emptyDrawable);
+//            Drawable emptyDrawable =
+//                    new IconDrawable(getContext(), Iconify.IconValue.zmdi_shopping_basket).colorRes(
+//                            android.R.color.white);
+
+            Drawable errorDrawable =
+                    ContextCompat.getDrawable(getContext(), R.mipmap.ic_shopping_basket_white_36dp);
+            DrawableCompat.setTint(errorDrawable, ContextCompat.getColor(getContext(), android.R.color.white));
+            errorStateImageView.setImageDrawable(errorDrawable);
 
             //Set background color if not TRANSPARENT
             if (emptyStateBackgroundColor != Color.TRANSPARENT) {
@@ -384,10 +390,13 @@ public class ProgressLayout extends RelativeLayout {
             errorStateImageView = (ImageView) view.findViewById(R.id.errorStateImageView);
             errorStateButton = (Button) view.findViewById(R.id.errorStateButton);
 
-            Drawable errorDrawable =
-                    new IconDrawable(getContext(), Iconify.IconValue.zmdi_wifi_off).colorRes(
-                            R.color.mc);
+//            Drawable errorDrawable =
+//                    new IconDrawable(getContext(), Iconify.IconValue.zmdi_wifi_off).colorRes(
+//                            R.color.mc);
 
+            Drawable errorDrawable =
+                    ContextCompat.getDrawable(getContext(), R.mipmap.ic_signal_wifi_off_white_36dp);
+            DrawableCompat.setTint(errorDrawable, ContextCompat.getColor(getContext(), R.color.mc));
             errorStateImageView.setImageDrawable(errorDrawable);
 
             if (onClickListener != null) {
@@ -425,10 +434,14 @@ public class ProgressLayout extends RelativeLayout {
             if (errorMessage != null) {
                 errorStateContentTextView.setText(errorMessage);
             }
-            Drawable errorDrawable =
-                    new IconDrawable(getContext(), Iconify.IconValue.zmdi_wifi_off).colorRes(
-                            R.color.mc);
+//            Drawable errorDrawable =
+//                    new IconDrawable(getContext(), Iconify.IconValue.zmdi_wifi_off).colorRes(
+//                            R.color.mc);
 
+
+            Drawable errorDrawable = ContextCompat.getDrawable(getContext(),
+                    R.mipmap.ic_signal_wifi_off_white_36dp);
+            DrawableCompat.setTint(errorDrawable, ContextCompat.getColor(getContext(), R.color.mc));
             errorStateImageView.setImageDrawable(errorDrawable);
 
             if (onClickListener != null) {
