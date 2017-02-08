@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import com.uuch.adlibrary.AdConstant;
 import com.uuch.adlibrary.AdManager;
+import com.uuch.adlibrary.AnimDialogUtils;
 import com.uuch.adlibrary.bean.AdInfo;
 import com.uuch.adlibrary.transformer.DepthPageTransformer;
 import com.uuch.adlibrary.transformer.RotateDownPageTransformer;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Button button3 = null;
     private Button button4 = null;
     private Button button5 = null;
+    private Button button6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         button3 = (Button) findViewById(R.id.button3);
         button4 = (Button) findViewById(R.id.button4);
         button5 = (Button) findViewById(R.id.button5);
+        button6 = (Button) findViewById(R.id.button6);
     }
 
     /**
@@ -259,6 +263,15 @@ public class MainActivity extends AppCompatActivity {
                 })
                         .setPageTransformer(new RotateDownPageTransformer())
                         .showAdDialog(AdConstant.ANIM_UP_TO_DOWN);
+            }
+        });
+
+        button6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnimDialogUtils.getInstance(MainActivity.this)
+                        .initView(R.layout.layout_custom)
+                        .show();
             }
         });
     }
