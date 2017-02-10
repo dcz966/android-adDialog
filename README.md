@@ -102,7 +102,7 @@ allprojects {
 添加依赖
 
 ```
- compile 'com.github.d0calv1n:android-adDialog:1.0.4'
+ compile 'com.github.d0calv1n:android-adDialog:1.0.6'
 ```
 
 - 在代码中初始化数据
